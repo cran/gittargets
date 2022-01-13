@@ -1,0 +1,15 @@
+citHeader("To cite gittargets in publications use:")
+
+citEntry(
+  entry = "Manual",
+  title = "gittargets: Version Control for the Targets Package",
+  author = "William Michael Landau",
+  note = "https://docs.ropensci.org/gittargets/, https://github.com/ropensci/gittargets",
+  year = "2021",
+  textVersion = paste(
+    "William Michael Landau (2021).",
+    "gittargets: Version Control for the",
+    "targets Package. https://docs.ropensci.org/gittargets/,",
+    "https://github.com/ropensci/gittargets."
+  )
+)
