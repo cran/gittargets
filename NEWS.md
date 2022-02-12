@@ -1,3 +1,11 @@
+# gittargets 0.0.3
+
+* Fix an example for CRAN.
+
+# gittargets 0.0.2
+
+* Hard reset after checkout in `tar_git_checkout()` in order to recover potentially deleted files (#11).
+
 # gittargets 0.0.1
 
 * Join rOpenSci.
