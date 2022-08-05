@@ -1,3 +1,7 @@
+# gittargets 0.0.4
+
+* Compatibility with {targets} 0.13.0.
+
 # gittargets 0.0.3
 
 * Fix an example for CRAN.
