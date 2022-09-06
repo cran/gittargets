@@ -1,3 +1,8 @@
+# gittargets 0.0.5
+
+* Use `processx::run()` instead of `system2()` in `tar_git_ok()` and set `HOME` to `USERPROFILE` on Windows (#12, @psychelzh).
+* Handle errors invoking Git to get global user name and email.
+
 # gittargets 0.0.4
 
 * Compatibility with {targets} 0.13.0.

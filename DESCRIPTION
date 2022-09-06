@@ -11,7 +11,7 @@ Description: In computationally demanding data analysis pipelines,
   That way, when the user rolls back the code to a previous branch or commit,
   'gittargets' can recover the data contemporaneous with that commit so that
   all targets remain up to date.
-Version: 0.0.4
+Version: 0.0.5
 License: MIT + file LICENSE
 URL: https://docs.ropensci.org/gittargets/,
         https://github.com/ropensci/gittargets
@@ -53,7 +53,7 @@ VignetteBuilder: knitr
 Config/testthat/edition: 3
 RoxygenNote: 7.2.1
 NeedsCompilation: no
-Packaged: 2022-08-05 10:07:35 UTC; c240390
+Packaged: 2022-09-06 20:16:07 UTC; c240390
 Author: William Michael Landau [aut, cre]
     (<https://orcid.org/0000-0003-1878-3253>),
   Saras Windecker [rev],
@@ -61,4 +61,4 @@ Author: William Michael Landau [aut, cre]
   Eli Lilly and Company [cph]
 Maintainer: William Michael Landau <will.landau@gmail.com>
 Repository: CRAN
-Date/Publication: 2022-08-05 10:40:02 UTC
+Date/Publication: 2022-09-06 20:30:02 UTC
