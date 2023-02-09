@@ -1,9 +1,9 @@
-6ba6b91b3b970a35240405a02ffb3e84 *DESCRIPTION
+fa6d2ce2f79a34a8470dbe3fbe130a33 *DESCRIPTION
 d00d099c18d809e93f2d77f6df7693ad *LICENSE
-4341af0b37f5a1391423d928938f1c98 *NAMESPACE
-49f4bd851c798bae975cfa5b0de01ac6 *NEWS.md
+506c9da4e5a5dd5f2d588e8a6b939ecf *NAMESPACE
+08be46d135bce72bc6ad45803d052625 *NEWS.md
 6a3ad21e8f64c6447ecaa175083820d4 *R/tar_git_checkout.R
-0dcee1bbb19e14ca25f9f0c1e2963e2a *R/tar_git_init.R
+f79746d60e88c0b45c1dd6f2d69c52db *R/tar_git_init.R
 d5b9bd1bd27c324a6a023acd05a8d0d4 *R/tar_git_log.R
 a8f0b2c8cc554f88048e7d58762f01ba *R/tar_git_ok.R
 477d44dcb6cd3e9728c36dfced52c91b *R/tar_git_snapshot.R
@@ -11,7 +11,7 @@ d2e0fb0dc2bd0c99be0be93a3338871d *R/tar_git_status.R
 2017d9817594eb8f5ae40708119c5812 *R/tar_git_status_code.R
 f4cc0a535ae89a9f81140ac441a76757 *R/tar_git_status_data.R
 4b74690abba2670ea3f0e9b2af85e817 *R/tar_git_status_targets.R
-f38e0fc0e22b841bf3ad49738f456fe1 *R/tar_package.R
+dfbf40f28cc5731830e2dcc70bccc5c5 *R/tar_package.R
 75e004bbab71cfb514d2024df34cb597 *R/utils_assert.R
 8ed11f4db8df94b0b7649685e998f6b6 *R/utils_callr.R
 bbd3b55ddc3a9e840fef9168ff5ce3fa *R/utils_cli.R
@@ -19,11 +19,11 @@ e85ecbe07e9751dd1a2df9fd66cdfe89 *R/utils_data.R
 b4e1af2534ee5e0ba635186e14c42124 *R/utils_git.R
 5feb169cd112b006327fe5e2b3a334c5 *R/utils_logic.R
 10afb65e18266c3cfb3022773f8cd116 *build/vignette.rds
-2d9b93bdb9266b277aa5f24e57c1fd67 *inst/CITATION
+b9c69d032d96878a12ee32877d926ae9 *inst/CITATION
 a871e1392e7ab735c2085c3b3768f52b *inst/WORDLIST
 c8a38defec46709250a92a1da66884f3 *inst/doc/git.R
-32dacd607f3f9e76ba9e496596ead959 *inst/doc/git.Rmd
-a8fc19c9da25f595b0420303632e351c *inst/doc/git.html
+32f54968855b7cb379c5e917b74d49ac *inst/doc/git.Rmd
+1dc8844e13d951ee32fa216d74c044d7 *inst/doc/git.html
 ddf170518cdadff2a82af8298db84422 *man/figures/figures.pptx
 77b9de7dee414bf8af7a7788ff127dd4 *man/figures/image-credit.md
 de2268a682b5768c38e53a5c0b0463b0 *man/figures/logo-hexbin.png
@@ -57,5 +57,5 @@ c3cbbd2d3ea8e96f9985cf02eb18b49b *tests/testthat/test-tar_git_status_data.R
 c6ee870bd9c9a9c6d72b32f270b1d2d7 *tests/testthat/test-utils_data.R
 5ec53c192288940193d3d3e4ab6e04c6 *tests/testthat/test-utils_git.R
 18bf5ea12582044a6ba9ef1f8e69ec5f *tests/testthat/test-utils_logic.R
-32dacd607f3f9e76ba9e496596ead959 *vignettes/git.Rmd
+32f54968855b7cb379c5e917b74d49ac *vignettes/git.Rmd
 a55b5231117f23b781d2bd2231063f30 *vignettes/snapshot-model-git.png

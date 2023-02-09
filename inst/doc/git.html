@@ -135,13 +135,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   for (var i = 0; i < sheets.length; i++) {
     if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
     try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
+    var j = 0;
+    while (j < rules.length) {
       var rule = rules[j];
       // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
       var style = rule.style.cssText;
       // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
       // replace div.sourceCode by a pre.sourceCode rule
       sheets[i].deleteRule(j);
       sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
@@ -352,18 +359,18 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p>This tutorial shows how to use <code>gittargets</code> with the Git-based data versioning backend. Before proceeding, please read the <a href="https://github.com/ropensci/gittargets/blob/main/README.md">README</a> file or <a href="https://docs.ropensci.org/gittargets/">documentation website front page</a> for an overview of the package.</p>
 <div id="installation" class="section level2">
 <h2>Installation</h2>
-<p>Please begin with the installation instructions on the <a href="https://docs.ropensci.org/gittargets/">documentation website</a>. In addition, if your <code>targets</code> pipeline generates large data files, consider installing <a href="https://git-lfs.github.com">Git LFS</a>. The Git data backend in <code>gittargets</code> automatically opts into <a href="https://git-lfs.github.com">Git LFS</a>, so you should not need to do any manual configuration to reap the performance benefits.</p>
+<p>Please begin with the installation instructions on the <a href="https://docs.ropensci.org/gittargets/">documentation website</a>. In addition, if your <code>targets</code> pipeline generates large data files, consider installing <a href="https://git-lfs.com">Git LFS</a>. The Git data backend in <code>gittargets</code> automatically opts into <a href="https://git-lfs.com">Git LFS</a>, so you should not need to do any manual configuration to reap the performance benefits.</p>
 </div>
 <div id="remotes" class="section level2">
 <h2>Remotes</h2>
-<p>This backend is uses local <a href="https://git-scm.com">Git</a> only. It is possible to push the snapshotted <a href="https://books.ropensci.org/targets/data.html">data store</a> to a cloud service like <a href="https://github.com">GitHub</a>, <a href="https://about.gitlab.com">GitLab</a>, or <a href="https://bitbucket.org">Bitbucket</a>, but this is the user’s responsibility. Pipelines usually generate large data files, and <a href="https://github.com">GitHub</a> and its peers have file size limitations. Also, <code>gittargets</code> automatically opts into <a href="https://git-lfs.github.com">Git LFS</a> locally (unless <code>git_lfs</code> is <code>FALSE</code> in <code>tar_git_init()</code>), and <a href="https://git-lfs.github.com">Git LFS</a> on the cloud is a paid service.</p>
+<p>This backend is uses local <a href="https://git-scm.com">Git</a> only. It is possible to push the snapshotted <a href="https://books.ropensci.org/targets/data.html">data store</a> to a cloud service like <a href="https://github.com">GitHub</a>, <a href="https://about.gitlab.com">GitLab</a>, or <a href="https://bitbucket.org">Bitbucket</a>, but this is the user’s responsibility. Pipelines usually generate large data files, and <a href="https://github.com">GitHub</a> and its peers have file size limitations. Also, <code>gittargets</code> automatically opts into <a href="https://git-lfs.com">Git LFS</a> locally (unless <code>git_lfs</code> is <code>FALSE</code> in <code>tar_git_init()</code>), and <a href="https://git-lfs.com">Git LFS</a> on the cloud is a paid service.</p>
 </div>
 <div id="overall-workflow" class="section level2">
 <h2>Overall workflow</h2>
 <p>The most important steps of the Git data backend are as follows. The rest of this vignette walks through these steps in greater depth.</p>
 <ol style="list-style-type: decimal">
 <li>Create the source code and run the pipeline at least once so the <a href="https://books.ropensci.org/targets/data.html">data store</a> exists.</li>
-<li><code>tar_git_init()</code>: initialize a <a href="https://git-scm.com">Git</a>/<a href="https://git-lfs.github.com">Git-LFS</a> repository for the <a href="https://books.ropensci.org/targets/data.html">data store</a>.</li>
+<li><code>tar_git_init()</code>: initialize a <a href="https://git-scm.com">Git</a>/<a href="https://git-lfs.com">Git-LFS</a> repository for the <a href="https://books.ropensci.org/targets/data.html">data store</a>.</li>
 <li>Bring the pipeline up to date (e.g. with <a href="https://docs.ropensci.org/targets/reference/tar_make.html"><code>tar_make()</code></a>) and commit any changes to the source code.</li>
 <li><code>tar_git_snapshot()</code>: create a data snapshot for the current code commit.</li>
 <li>Develop the pipeline. Creating new code commits and code branches early and often, and create data snapshots at key strategic milestones.</li>
@@ -385,10 +392,10 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p>With our target script in hand, we run the pipeline.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">tar_make</span>()</span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="co">#&gt; • start target data</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="co">#&gt; • built target data</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co">#&gt; • built target data [0.007 seconds]</span></span>
 <span id="cb2-4"><a href="#cb2-4"></a><span class="co">#&gt; • start target result</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="co">#&gt; • built target result</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="co">#&gt; • end pipeline: 0.121 seconds</span></span></code></pre></div>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co">#&gt; • built target result [0.005 seconds]</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="co">#&gt; • end pipeline [0.1 seconds]</span></span></code></pre></div>
 <p>We inspect the output with <code>tar_read()</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">tar_read</span>(result)</span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="co">#&gt;      Ozone           Solar.R           Wind             Temp      </span></span>
@@ -434,19 +441,19 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb5-12"><a href="#cb5-12"></a><span class="co">#&gt; </span></span>
 <span id="cb5-13"><a href="#cb5-13"></a><span class="co">#&gt; ── Outdated targets ────────────────────────────────────────────────────────────</span></span>
 <span id="cb5-14"><a href="#cb5-14"></a><span class="co">#&gt; ✔ All targets are up to date.</span></span></code></pre></div>
-<p>Our code and pipeline look ready for a data snapshot. First, we initialize the data repository with <code>tar_git_init()</code>. <code>tar_git_init()</code> writes a <code>.gitattributes</code> file in the data store that automatically opts into <a href="https://git-lfs.github.com">Git LFS</a>. If you have <a href="https://git-lfs.github.com">Git LFS</a> but do not wish to use it, please remove the <code>.gitattributes</code> after calling <code>tar_git_init()</code>.</p>
+<p>Our code and pipeline look ready for a data snapshot. First, we initialize the data repository with <code>tar_git_init()</code>. <code>tar_git_init()</code> writes a <code>.gitattributes</code> file in the data store that automatically opts into <a href="https://git-lfs.com">Git LFS</a>. If you have <a href="https://git-lfs.com">Git LFS</a> but do not wish to use it, please remove the <code>.gitattributes</code> after calling <code>tar_git_init()</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">tar_git_init</span>()</span>
 <span id="cb6-2"><a href="#cb6-2"></a><span class="co">#&gt; ✔ Created data store Git repository</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="co">#&gt; ✔ Wrote to _targets/.gitattributes for git-lfs: &lt;https://git-lfs.github.com&gt;.</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="co">#&gt; ✔ Wrote to _targets/.gitattributes for git-lfs: &lt;https://git-lfs.com&gt;.</span></span>
 <span id="cb6-4"><a href="#cb6-4"></a><span class="co">#&gt; ✔ Created stub commit without data.</span></span>
 <span id="cb6-5"><a href="#cb6-5"></a><span class="co">#&gt; • Run tar_git_snapshot() to put the data files under version control.</span></span></code></pre></div>
 <p>Then, we create our first data commit with <code>tar_git_snapshot()</code>.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">tar_git_snapshot</span>()</span></code></pre></div>
-<pre><code>#&gt; • Creating data branch code=e3337eb3d9bda9e8c43cbd5b01e21add1d2f21a8.
+<pre><code>#&gt; • Creating data branch code=db1e3a7ce315f6689b556f1f68c776f37ceeabf7.
 #&gt; • Staging data files.
 #&gt; ✔ Staged 6 files in the data store.
 #&gt; • Committing data changes.
-#&gt; ✔ Created new data snapshot 659e6450ec5bb88a0137bcc0e29fdd6a86e4ce8a.
+#&gt; ✔ Created new data snapshot 2e9c63b3c4d0dd0cbbf0312703a1e1d78ed3cf97.
 #&gt; • Packing references.</code></pre>
 <div id="snapshot-model" class="section level3">
 <h3>Snapshot model</h3>
@@ -466,10 +473,10 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p>We run the pipeline and inspect the new output.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">tar_make</span>()</span>
 <span id="cb10-2"><a href="#cb10-2"></a><span class="co">#&gt; • start target data</span></span>
-<span id="cb10-3"><a href="#cb10-3"></a><span class="co">#&gt; • built target data</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="co">#&gt; • built target data [0.003 seconds]</span></span>
 <span id="cb10-4"><a href="#cb10-4"></a><span class="co">#&gt; • start target result</span></span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="co">#&gt; • built target result</span></span>
-<span id="cb10-6"><a href="#cb10-6"></a><span class="co">#&gt; • end pipeline: 0.112 seconds</span></span></code></pre></div>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="co">#&gt; • built target result [0.002 seconds]</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="co">#&gt; • end pipeline [0.104 seconds]</span></span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">tar_read</span>(result)</span>
 <span id="cb11-2"><a href="#cb11-2"></a><span class="co">#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
 <span id="cb11-3"><a href="#cb11-3"></a><span class="co">#&gt;    84.8   153.3   220.9   337.6   469.9  1163.9</span></span></code></pre></div>
@@ -482,14 +489,14 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb12-6"><a href="#cb12-6"></a><span class="co">#&gt; 1 _targets.R modified TRUE  </span></span>
 <span id="cb12-7"><a href="#cb12-7"></a><span class="co">#&gt; 2 _targets/  new      FALSE</span></span>
 <span id="cb12-8"><a href="#cb12-8"></a><span class="kw">git_commit</span>(<span class="st">&quot;Switch to UKgas dataset&quot;</span>)</span>
-<span id="cb12-9"><a href="#cb12-9"></a><span class="co">#&gt; [1] &quot;0df27a7f4e6e36f6c21b52127e6720aa3fa0a80d&quot;</span></span></code></pre></div>
+<span id="cb12-9"><a href="#cb12-9"></a><span class="co">#&gt; [1] &quot;bb96cff88cc9554de971d8e8971aa2f9b12b0c75&quot;</span></span></code></pre></div>
 <p>Finally, we create a data snapshot for the new code commit.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">tar_git_snapshot</span>()</span></code></pre></div>
-<pre><code>#&gt; • Creating data branch code=0df27a7f4e6e36f6c21b52127e6720aa3fa0a80d.
+<pre><code>#&gt; • Creating data branch code=bb96cff88cc9554de971d8e8971aa2f9b12b0c75.
 #&gt; • Staging data files.
 #&gt; ✔ Staged 5 files in the data store.
 #&gt; • Committing data changes.
-#&gt; ✔ Created new data snapshot 75189cfa14ba7d84d8f8697d1af49c657eb63447.
+#&gt; ✔ Created new data snapshot ab4947d7662add46c88975b5de477872f9f0dfe1.
 #&gt; • Packing references.</code></pre>
 </div>
 <div id="view-log" class="section level2">
@@ -499,8 +506,8 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <span id="cb15-2"><a href="#cb15-2"></a><span class="co">#&gt; # A tibble: 2 × 6</span></span>
 <span id="cb15-3"><a href="#cb15-3"></a><span class="co">#&gt;   message_code   messa…¹ time_code           time_data           commi…² commi…³</span></span>
 <span id="cb15-4"><a href="#cb15-4"></a><span class="co">#&gt;   &lt;chr&gt;          &lt;chr&gt;   &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;   &lt;chr&gt;  </span></span>
-<span id="cb15-5"><a href="#cb15-5"></a><span class="co">#&gt; 1 Switch to UKg… Switch… 2022-09-06 16:16:02 2022-09-06 16:16:02 0df27a… 75189c…</span></span>
-<span id="cb15-6"><a href="#cb15-6"></a><span class="co">#&gt; 2 Begin analyzi… Begin … 2022-09-06 16:15:57 2022-09-06 16:16:00 e3337e… 659e64…</span></span>
+<span id="cb15-5"><a href="#cb15-5"></a><span class="co">#&gt; 1 Switch to UKg… Switch… 2023-02-09 09:29:08 2023-02-09 09:29:08 bb96cf… ab4947…</span></span>
+<span id="cb15-6"><a href="#cb15-6"></a><span class="co">#&gt; 2 Begin analyzi… Begin … 2023-02-09 09:29:04 2023-02-09 09:29:06 db1e3a… 2e9c63…</span></span>
 <span id="cb15-7"><a href="#cb15-7"></a><span class="co">#&gt; # … with abbreviated variable names ¹​message_data, ²​commit_code, ³​commit_data</span></span></code></pre></div>
 </div>
 <div id="check-out-code" class="section level2">
@@ -519,8 +526,8 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h2>Check out data</h2>
 <p>To bring our targets back up to date with the <code>airquality</code> data, instead of beginning a potentially long computation with <code>tar_make()</code>, we can check out the data snapshot that matches our current code commit.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="kw">tar_git_checkout</span>()</span>
-<span id="cb19-2"><a href="#cb19-2"></a><span class="co">#&gt; ✔ Checked out data snapshot 659e6450ec5bb88a0137bcc0e29fdd6a86e4ce8a.</span></span>
-<span id="cb19-3"><a href="#cb19-3"></a><span class="co">#&gt; • Code commit: code=e3337eb3d9bda9e8c43cbd5b01e21add1d2f21a8</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="co">#&gt; ✔ Checked out data snapshot 2e9c63b3c4d0dd0cbbf0312703a1e1d78ed3cf97.</span></span>
+<span id="cb19-3"><a href="#cb19-3"></a><span class="co">#&gt; • Code commit: code=db1e3a7ce315f6689b556f1f68c776f37ceeabf7</span></span>
 <span id="cb19-4"><a href="#cb19-4"></a><span class="co">#&gt; • Message: Begin analyzing the airquality dataset</span></span>
 <span id="cb19-5"><a href="#cb19-5"></a><span class="co">#&gt; • Resetting to HEAD of checked-out snapshot.</span></span></code></pre></div>
 <p>Now, our results reflect the <code>airquality</code> dataset we previously analyzed.</p>
@@ -555,7 +562,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 </div>
 <div id="performance" class="section level2">
 <h2>Performance</h2>
-<p>If your <code>targets</code> pipeline generates large data files, consider installing <a href="https://git-lfs.github.com">Git LFS</a>. Once you install <a href="https://git-lfs.github.com">Git LFS</a>, it should just work on your project right out of the box because <code>tar_git_init()</code> writes the following to <code>_targets/.gitattributes</code>:</p>
+<p>If your <code>targets</code> pipeline generates large data files, consider installing <a href="https://git-lfs.com">Git LFS</a>. Once you install <a href="https://git-lfs.com">Git LFS</a>, it should just work on your project right out of the box because <code>tar_git_init()</code> writes the following to <code>_targets/.gitattributes</code>:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1"></a><span class="ex">objects</span> filter=lfs diff=lfs merge=lfs -text</span></code></pre></div>
 <p>In addition, every data snapshot with <code>tar_git_snapshot()</code> creates a new Git branch. With thousands of commits and thus thousands of branches, performance may suffer unless you ensure <code>pack_refs</code> is <code>TRUE</code> in the function call (default).<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>(<a href="https://git-scm.com/docs/git-pack-refs" class="uri">https://git-scm.com/docs/git-pack-refs</a>) in the command line with your working directory inside <code>_targets/</code>.]</p>
 </div>
