@@ -1,3 +1,7 @@
+# gittargets 0.0.7
+
+* Migrate tests to `targets` >= 1.3.2.9004 progress statuses ("completed" instead of "built", "dispatched" instead of "started").
+
 # gittargets 0.0.6
 
 * Import `callr::r()`.

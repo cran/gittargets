@@ -12,7 +12,7 @@ knitr::opts_chunk$set(
     tar_git_ok(verbose = FALSE)
 )
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  # _targets.R
 #  library(targets)
 #  list(
@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 #    tar_target(result, summary(data))
 #  )
 
-## ---- echo = FALSE------------------------------------------------------------
+## ----echo = FALSE-------------------------------------------------------------
 tar_script(
   list(
     tar_target(data, datasets::airquality),
@@ -34,7 +34,7 @@ tar_make()
 ## -----------------------------------------------------------------------------
 tar_read(result)
 
-## ---- message = FALSE, output = FALSE, results = "hide"-----------------------
+## ----message = FALSE, output = FALSE, results = "hide"------------------------
 library(gert)
 git_init()
 git_add("_targets.R")
@@ -47,13 +47,13 @@ tar_git_status()
 ## -----------------------------------------------------------------------------
 tar_git_init()
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  tar_git_snapshot()
 
-## ---- echo = FALSE------------------------------------------------------------
+## ----echo = FALSE-------------------------------------------------------------
 tar_git_snapshot(status = FALSE)
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  # _targets.R
 #  library(targets)
 #  list(
@@ -61,7 +61,7 @@ tar_git_snapshot(status = FALSE)
 #    tar_target(result, summary(data))
 #  )
 
-## ---- echo = FALSE------------------------------------------------------------
+## ----echo = FALSE-------------------------------------------------------------
 tar_script(
   list(
     tar_target(data, datasets::UKgas),
@@ -80,16 +80,16 @@ git_branch_create("UKgas")
 git_add("_targets.R")
 git_commit("Switch to UKgas dataset")
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  tar_git_snapshot()
 
-## ---- echo = FALSE------------------------------------------------------------
+## ----echo = FALSE-------------------------------------------------------------
 tar_git_snapshot(status = FALSE)
 
 ## -----------------------------------------------------------------------------
 tar_git_log()
 
-## ---- message = FALSE, output = FALSE, results = "hide"-----------------------
+## ----message = FALSE, output = FALSE, results = "hide"------------------------
 git_branch_checkout("airquality")
 
 ## -----------------------------------------------------------------------------
